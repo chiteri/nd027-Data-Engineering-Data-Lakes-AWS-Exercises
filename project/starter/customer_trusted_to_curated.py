@@ -4,8 +4,6 @@ from awsglue.utils import getResolvedOptions
 from pyspark.context import SparkContext
 from awsglue.context import GlueContext
 from awsglue.job import Job
-from awsglue.dynamicframe import DynamicFrame
-from pyspark.sql import functions as SqlFuncs
 
 args = getResolvedOptions(sys.argv, ["JOB_NAME"])
 sc = SparkContext()
@@ -54,16 +52,9 @@ DropFields_node1689902396080 = DropFields.apply(
     transformation_ctx="DropFields_node1689902396080",
 )
 
-# Script generated for node Drop Duplicates
-DropDuplicates_node1689903681836 = DynamicFrame.fromDF(
-    DropFields_node1689902396080.toDF().dropDuplicates(["email", "birthDay"]),
-    glueContext,
-    "DropDuplicates_node1689903681836",
-)
-
 # Script generated for node Customer Curated
 CustomerCurated_node3 = glueContext.write_dynamic_frame.from_options(
-    frame=DropDuplicates_node1689903681836,
+    frame=DropFields_node1689902396080,
     connection_type="s3",
     format="json",
     connection_options={
