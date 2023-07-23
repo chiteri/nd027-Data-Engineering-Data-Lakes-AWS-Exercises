@@ -24,22 +24,22 @@ CustomerTrustedZone_node1 = glueContext.create_dynamic_frame.from_options(
     transformation_ctx="CustomerTrustedZone_node1",
 )
 
-# Script generated for node Accelerometer Landing
-AccelerometerLanding_node1689902219430 = glueContext.create_dynamic_frame.from_options(
+# Script generated for node Accelerometer Trusted
+AccelerometerTrusted_node1689902219430 = glueContext.create_dynamic_frame.from_options(
     format_options={"multiline": False},
     connection_type="s3",
     format="json",
     connection_options={
-        "paths": ["s3://darkstar-lake-house/accelerometer/landing/"],
+        "paths": ["s3://darkstar-lake-house/accelerometer/trusted/"],
         "recurse": True,
     },
-    transformation_ctx="AccelerometerLanding_node1689902219430",
+    transformation_ctx="AccelerometerTrusted_node1689902219430",
 )
 
 # Script generated for node Join Customer
 JoinCustomer_node1689902319411 = Join.apply(
     frame1=CustomerTrustedZone_node1,
-    frame2=AccelerometerLanding_node1689902219430,
+    frame2=AccelerometerTrusted_node1689902219430,
     keys1=["email"],
     keys2=["user"],
     transformation_ctx="JoinCustomer_node1689902319411",
